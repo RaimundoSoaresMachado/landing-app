@@ -1,5 +1,3 @@
-# landing-app
-O aplicativo definitivo para gerenciar passagens e fretes em embarcações fluviais na região amazônica, conectando pessoas e mercadorias através dos rios.
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,7 +5,10 @@ O aplicativo definitivo para gerenciar passagens e fretes em embarcações fluvi
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NavegaAmazon — Sistema de Gestão Fluvial</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>html { scroll-behavior: smooth; } .gradient-text { background: linear-gradient(to right, #0ea5e9, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }</style>
+  <style>
+    html { scroll-behavior: smooth; }
+    .gradient-text { background: linear-gradient(to right, #0ea5e9, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  </style>
 </head>
 <body class="bg-white font-sans text-slate-800">
 
@@ -129,64 +130,49 @@ O aplicativo definitivo para gerenciar passagens e fretes em embarcações fluvi
       <div class="text-center mb-16">
         <span class="inline-block mb-4 bg-blue-100 text-blue-700 border border-blue-200 text-sm px-4 py-1 rounded-full font-medium">Planos</span>
         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Escolha o plano ideal</h2>
-        <p class="text-lg text-slate-500 max-w-xl mx-auto">Comece gratuitamente e escale conforme sua operação crescer.</p>
+        <p class="text-lg text-slate-500">Sem taxas surpresa. Cancele quando quiser.</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Trial -->
-        <div class="rounded-2xl border border-slate-200 p-6 flex flex-col">
-          <div class="mb-4"><span class="inline-block bg-slate-100 text-slate-600 text-xs px-3 py-1 rounded-full font-medium">Trial</span></div>
-          <p class="text-3xl font-extrabold text-slate-900 mb-1">Grátis</p>
-          <p class="text-sm text-slate-400 mb-6">7 dias para testar</p>
-          <ul class="space-y-2 text-sm text-slate-600 mb-8 flex-1">
-            <li>✅ 10 passagens/mês</li>
-            <li>✅ 1 embarcação</li>
-            <li>✅ 1 vendedor</li>
-            <li>✅ Fretes ilimitados</li>
-          </ul>
-          <a href__="https://app.raysistemas.online" class="block text-center bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2.5 rounded-lg transition-colors">Começar grátis</a>
-        </div>
-        <!-- Básico -->
-        <div class="rounded-2xl border border-slate-200 p-6 flex flex-col">
-          <div class="mb-4"><span class="inline-block bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium">Básico</span></div>
-          <p class="text-3xl font-extrabold text-slate-900 mb-1">R$ 97<span class="text-base font-normal text-slate-400">/mês</span></p>
-          <p class="text-sm text-slate-400 mb-6">Para pequenas operações</p>
-          <ul class="space-y-2 text-sm text-slate-600 mb-8 flex-1">
-            <li>✅ 300 passagens/mês</li>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div class="border border-slate-200 rounded-2xl p-8">
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Básico</h3>
+          <p class="text-slate-500 text-sm mb-6">Para começar com o essencial</p>
+          <div class="mb-6"><span class="text-4xl font-extrabold text-slate-900">R$89</span><span class="text-slate-400">/mês</span></div>
+          <ul class="space-y-3 text-sm text-slate-600 mb-8">
+            <li>✅ Até 300 passagens/mês</li>
             <li>✅ 2 embarcações</li>
             <li>✅ 3 vendedores</li>
             <li>✅ Fretes ilimitados</li>
-            <li>✅ ClicPorto (vendas online)</li>
+            <li>✅ Suporte por WhatsApp</li>
           </ul>
-          <a href__="https://app.raysistemas.online" class="block text-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-lg transition-colors">Assinar</a>
+          <a href__="https://app.raysistemas.online" class="block text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-3 rounded-lg transition-colors">Começar agora</a>
         </div>
-        <!-- Profissional -->
-        <div class="rounded-2xl border-2 border-blue-600 p-6 flex flex-col relative shadow-xl">
-          <div class="absolute -top-3 left-1/2 -translate-x-1/2"><span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-semibold">Mais popular</span></div>
-          <div class="mb-4"><span class="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full font-medium">Profissional</span></div>
-          <p class="text-3xl font-extrabold text-slate-900 mb-1">R$ 197<span class="text-base font-normal text-slate-400">/mês</span></p>
-          <p class="text-sm text-slate-400 mb-6">Para operações em crescimento</p>
-          <ul class="space-y-2 text-sm text-slate-600 mb-8 flex-1">
+        <div class="border-2 border-blue-600 rounded-2xl p-8 relative shadow-xl">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full">MAIS POPULAR</span>
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Profissional</h3>
+          <p class="text-slate-500 text-sm mb-6">Para operações em crescimento</p>
+          <div class="mb-6"><span class="text-4xl font-extrabold text-blue-600">R$249</span><span class="text-slate-400">/mês</span></div>
+          <ul class="space-y-3 text-sm text-slate-600 mb-8">
             <li>✅ Passagens ilimitadas</li>
             <li>✅ Embarcações ilimitadas</li>
             <li>✅ 4 vendedores</li>
-            <li>✅ Fretes ilimitados</li>
             <li>✅ ClicPorto (vendas online)</li>
             <li>✅ Relatórios avançados</li>
+            <li>✅ Suporte prioritário</li>
           </ul>
-          <a href__="https://app.raysistemas.online" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">Assinar</a>
+          <a href__="https://app.raysistemas.online" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors">Começar agora</a>
         </div>
-        <!-- Premium -->
-        <div class="rounded-2xl border border-slate-200 p-6 flex flex-col">
-          <div class="mb-4"><span class="inline-block bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">Premium</span></div>
-          <p class="text-3xl font-extrabold text-slate-900 mb-1">R$ 297<span class="text-base font-normal text-slate-400">/mês</span></p>
-          <p class="text-sm text-slate-400 mb-6">Para grandes operações</p>
-          <ul class="space-y-2 text-sm text-slate-600 mb-8 flex-1">
+        <div class="border border-slate-200 rounded-2xl p-8">
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Premium</h3>
+          <p class="text-slate-500 text-sm mb-6">Para grandes operações</p>
+          <div class="mb-6"><span class="text-4xl font-extrabold text-slate-900">R$350</span><span class="text-slate-400">/mês</span></div>
+          <ul class="space-y-3 text-sm text-slate-600 mb-8">
             <li>✅ Tudo do Profissional</li>
             <li>✅ Vendedores ilimitados</li>
-            <li>✅ Suporte prioritário</li>
-            <li>✅ Treinamento incluso</li>
+            <li>✅ Multi-empresas</li>
+            <li>✅ API de integração</li>
+            <li>✅ Gerente de conta dedicado</li>
           </ul>
-          <a href__="https://app.raysistemas.online" class="block text-center bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2.5 rounded-lg transition-colors">Assinar</a>
+          <a href__="https://app.raysistemas.online" class="block text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-3 rounded-lg transition-colors">Começar agora</a>
         </div>
       </div>
     </div>
@@ -194,11 +180,10 @@ O aplicativo definitivo para gerenciar passagens e fretes em embarcações fluvi
 
   <!-- CTA FINAL -->
   <section class="py-24 bg-gradient-to-br from-sky-600 to-blue-700 text-white text-center">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl md:text-4xl font-extrabold mb-6">Pronto para digitalizar sua operação?</h2>
-      <p class="text-xl text-blue-100 mb-10">Junte-se a centenas de empresas que já modernizaram sua gestão fluvial com o NavegaAmazon.</p>
-      <a href__="https://app.raysistemas.online" class="inline-flex items-center justify-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold text-lg px-10 py-4 rounded-xl transition-colors shadow-lg">Começar gratuitamente →</a>
-      <p class="text-sm text-blue-200 mt-6">Sem cartão de crédito • Configure em minutos</p>
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-6">Pronto para modernizar sua operação?</h2>
+      <p class="text-xl text-blue-100 mb-10">Comece grátis por 7 dias. Sem cartão de crédito.</p>
+      <a href__="https://app.raysistemas.online" class="inline-flex items-center gap-2 bg-white text-blue-700 font-bold text-lg px-10 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg">Começar gratuitamente →</a>
     </div>
   </section>
 
@@ -210,19 +195,18 @@ O aplicativo definitivo para gerenciar passagens e fretes em embarcações fluvi
           <span class="text-blue-400 text-xl">⚓</span>
           <span class="text-white font-bold">NavegaAmazon</span>
         </div>
-        <div class="flex gap-8 text-sm">
+        <div class="flex flex-wrap justify-center gap-6 text-sm">
           <a href__="#funcionalidades" class="hover:text-white transition-colors">Funcionalidades</a>
           <a href__="#planos" class="hover:text-white transition-colors">Planos</a>
           <a href__="#depoimentos" class="hover:text-white transition-colors">Depoimentos</a>
           <a href__="https://app.raysistemas.online" class="hover:text-white transition-colors">Entrar</a>
         </div>
-        <p class="text-sm">© 2025 NavegaAmazon. Todos os direitos reservados.</p>
+        <p class="text-xs">© 2025 NavegaAmazon. Todos os direitos reservados.</p>
       </div>
     </div>
   </footer>
 
   <script>
-    // Mobile menu toggle
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     menuBtn.addEventListener('click', () => {
