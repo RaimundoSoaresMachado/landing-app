@@ -3,208 +3,416 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NavegaAmazon — Sistema de Gestão Fluvial</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>html { scroll-behavior: smooth; } .gradient-text { background: linear-gradient(to right, #0ea5e9, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }</style>
+  <title>NavegaAmazon — Sistema Fluvial Completo</title>
+  <meta name="description" content="O NavegaAmazon digitaliza toda a operação fluvial: passagens com QR Code, encomendas, cargas e fretes. Feito para empresas da Amazônia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: #0f172a; background: #fff; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid #f1f5f9;
+      height: 64px; display: flex; align-items: center;
+    }
+    .nav-inner {
+      max-width: 1152px; margin: 0 auto; padding: 0 24px;
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 800; color: #1e293b; }
+    .nav-logo svg { color: #2563eb; }
+    .nav-links { display: flex; gap: 32px; font-size: 14px; color: #475569; }
+    .nav-links a:hover { color: #2563eb; }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all .2s; font-family: inherit; font-size: 14px; }
+    .btn-primary { background: #2563eb; color: #fff; padding: 10px 20px; border: none; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-outline { background: #fff; color: #1e293b; padding: 9px 20px; border: 1.5px solid #e2e8f0; }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn-lg { font-size: 17px; padding: 14px 32px; border-radius: 12px; }
+    .btn-green { background: #22c55e; color: #fff; border: none; padding: 10px 20px; }
+    .btn-green:hover { background: #16a34a; }
+
+    /* HERO */
+    .hero {
+      padding-top: 100px;
+      background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #eff6ff 100%);
+    }
+    .hero-content { max-width: 1152px; margin: 0 auto; padding: 60px 24px 60px; text-align: center; }
+    .badge {
+      display: inline-block; background: #dbeafe; color: #1d4ed8;
+      border: 1px solid #bfdbfe; border-radius: 999px;
+      font-size: 13px; font-weight: 600; padding: 5px 16px; margin-bottom: 24px;
+    }
+    .badge-amber { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+    .badge-emerald { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+    .badge-violet { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+    .badge-sky { background: #e0f2fe; color: #0c4a6e; border-color: #bae6fd; }
+    h1 { font-size: clamp(2rem, 5vw, 3.75rem); font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 24px; }
+    .gradient-text { background: linear-gradient(135deg, #0ea5e9, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 20px; color: #475569; max-width: 640px; margin: 0 auto 40px; line-height: 1.6; }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .hero-note { font-size: 13px; color: #94a3b8; margin-top: 20px; }
+    .hero-img { width: 100%; max-height: 420px; object-fit: cover; object-position: center; }
+
+    /* FRETE SECTION */
+    .section-frete { padding: 80px 24px; background: #fffbeb; border-top: 1px solid #fde68a; border-bottom: 1px solid #fde68a; }
+    .section-title { text-align: center; margin-bottom: 48px; }
+    .section-title h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; color: #0f172a; margin-top: 12px; }
+    .cards-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1152px; margin: 0 auto; }
+    .frete-card { background: #fff; border-radius: 16px; border: 2px solid #fcd34d; padding: 28px; }
+    .frete-card.orange { border-color: #fb923c; }
+    .frete-card.rose { border-color: #fb7185; }
+    .icon-box { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .icon-box.amber { background: #f59e0b; }
+    .icon-box.orange { background: #f97316; }
+    .icon-box.rose { background: #f43f5e; }
+    .icon-box svg { color: #fff; width: 22px; height: 22px; }
+    .frete-card h3 { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+    .frete-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .frete-card li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #475569; }
+    .check { color: #10b981; font-size: 16px; flex-shrink: 0; }
+
+    /* FUNCIONALIDADES */
+    .section-func { padding: 96px 24px; background: #fff; }
+    .func-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1152px; margin: 0 auto; }
+    .func-card { padding: 28px; border-radius: 16px; border: 1px solid #f1f5f9; transition: all .2s; }
+    .func-card:hover { border-color: #bfdbfe; box-shadow: 0 8px 30px rgba(37,99,235,.08); }
+    .func-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 24px; }
+    .func-card h3 { font-size: 17px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+    .func-card p { font-size: 14px; color: #64748b; line-height: 1.6; }
+
+    /* DIFERENCIAIS */
+    .section-diff { padding: 80px 24px; background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; }
+    .diff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; max-width: 960px; margin: 0 auto; text-align: center; }
+    .diff-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; }
+    .diff-grid h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .diff-grid p { font-size: 14px; color: #bfdbfe; line-height: 1.6; }
+
+    /* SEJA VOCÊ TAMBÉM */
+    .section-seja { padding: 96px 24px; background: #fff; }
+    .seja-inner { max-width: 1152px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .seja-inner h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 900; color: #0f172a; margin: 12px 0 20px; line-height: 1.2; }
+    .seja-inner p { font-size: 17px; color: #475569; line-height: 1.7; margin-bottom: 28px; }
+    .seja-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .seja-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #334155; }
+    .seja-img { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+    .seja-img img { height: 460px; object-fit: cover; }
+    .river-strip { width: 100%; max-height: 300px; overflow: hidden; }
+    .river-strip img { object-fit: cover; max-height: 300px; }
+
+    /* PLANOS */
+    .section-planos { padding: 96px 24px; background: #fff; }
+    .planos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 1152px; margin: 0 auto; }
+    .plano-card { border-radius: 20px; border: 2px solid #e2e8f0; padding: 28px; display: flex; flex-direction: column; background: #fff; position: relative; }
+    .plano-card.destaque { border-color: #2563eb; box-shadow: 0 20px 60px rgba(37,99,235,.15); background: linear-gradient(to bottom, #eff6ff, #fff); transform: scale(1.04); }
+    .plano-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #2563eb; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 999px; white-space: nowrap; }
+    .plano-nome { font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+    .plano-desc { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+    .plano-preco { margin-bottom: 24px; }
+    .plano-preco span { font-size: 2rem; font-weight: 900; color: #0f172a; }
+    .plano-preco small { font-size: 14px; color: #94a3b8; }
+    .plano-recursos { list-style: none; display: flex; flex-direction: column; gap: 8px; flex: 1; margin-bottom: 28px; }
+    .plano-recursos li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: #475569; }
+
+    /* CTA FINAL */
+    .section-cta { padding: 96px 24px; background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; text-align: center; }
+    .section-cta h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 900; margin-bottom: 16px; }
+    .section-cta p { font-size: 18px; color: #bae6fd; margin-bottom: 36px; }
+    .btn-white { background: #fff; color: #2563eb; border: none; padding: 16px 40px; font-size: 18px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: .2s; display: inline-flex; align-items: center; gap: 10px; }
+    .btn-white:hover { background: #eff6ff; }
+    .section-cta small { display: block; color: #7dd3fc; margin-top: 16px; font-size: 14px; }
+
+    /* FOOTER */
+    footer { background: #0f172a; color: #64748b; text-align: center; padding: 40px 24px; font-size: 14px; }
+    footer .logo { display: flex; align-items: center; justify-content: center; gap: 8px; color: #fff; font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    footer p { margin-top: 6px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links, .nav-actions { display: none; }
+      .seja-inner { grid-template-columns: 1fr; gap: 32px; }
+      .seja-inner > div:last-child { order: -1; }
+      .plano-card.destaque { transform: none; }
+    }
+  </style>
 </head>
-<body class="bg-white font-sans text-slate-800">
+<body>
 
-  <!-- NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-blue-600 text-2xl">⚓</span>
-        <span class="text-xl font-bold text-slate-800">NavegaAmazon</span>
-      </div>
-      <div class="hidden md:flex items-center gap-8 text-sm text-slate-600">
-        <a href="#funcionalidades" class="hover:text-blue-600 transition-colors">Funcionalidades</a>
-        <a href="#planos" class="hover:text-blue-600 transition-colors">Planos</a>
-        <a href="#depoimentos" class="hover:text-blue-600 transition-colors">Depoimentos</a>
-      </div>
-      <div class="hidden md:flex items-center gap-3">
-        <a href="https://app.raysistemas.online" class="text-sm font-medium text-slate-700 hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors">Entrar</a>
-        <a href="https://app.raysistemas.online" class="text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">Começar grátis</a>
-      </div>
-      <button id="menuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100">☰</button>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1a2 2 0 0 0 0-4h-1"/></svg>
+      NavegaAmazon
     </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-2">
-      <a href="#funcionalidades" class="block w-full text-left text-slate-700 py-2 hover:text-blue-600">Funcionalidades</a>
-      <a href="#planos" class="block w-full text-left text-slate-700 py-2 hover:text-blue-600">Planos</a>
-      <a href="#depoimentos" class="block w-full text-left text-slate-700 py-2 hover:text-blue-600">Depoimentos</a>
-      <a href="https://app.raysistemas.online" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors">Começar grátis</a>
+    <div class="nav-links">
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#planos">Planos</a>
     </div>
-  </nav>
+    <div class="nav-actions">
+      <a href="https://app.raysistemas.online/" class="btn btn-outline">Entrar</a>
+      <a href="https://app.raysistemas.online/" class="btn btn-primary">Começar grátis</a>
+    </div>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="pt-28 pb-20 bg-gradient-to-br from-sky-50 via-white to-blue-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-      <span class="inline-block mb-6 bg-blue-100 text-blue-700 border border-blue-200 text-sm px-4 py-1 rounded-full font-medium">🚢 Sistema fluvial completo para a Amazônia</span>
-      <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-6">
-        Gerencie passagens e fretes<br />
-        <span class="gradient-text">de forma profissional</span>
-      </h1>
-      <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-10">O NavegaAmazon digitaliza a operação de empresas de transporte fluvial. Venda bilhetes com QR Code, controle fretes e receba pagamentos via PIX — tudo em um só lugar.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://app.raysistemas.online" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg px-8 py-3 rounded-lg transition-colors">Começar gratuitamente →</a>
-        <a href="#funcionalidades" class="inline-flex items-center justify-center gap-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-lg px-8 py-3 rounded-lg transition-colors">Ver funcionalidades</a>
-      </div>
-      <p class="text-sm text-slate-400 mt-6">Sem cartão de crédito • 7 dias grátis • Cancele quando quiser</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">🚢 Sistema fluvial completo para a Amazônia</div>
+    <h1>Passagens, encomendas e cargas<br><span class="gradient-text">tudo em um só sistema</span></h1>
+    <p class="hero-sub">O NavegaAmazon digitaliza toda a operação fluvial: venda passagens com QR Code, registre encomendas e cargas, controle fretes e receba via PIX — do porto à entrega.</p>
+    <div class="hero-actions">
+      <a href="https://app.raysistemas.online/" class="btn btn-primary btn-lg">Começar gratuitamente →</a>
+      <a href="#funcionalidades" class="btn btn-outline btn-lg">Ver funcionalidades</a>
     </div>
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 mt-16">
-      <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-        <div class="bg-gradient-to-r from-sky-600 to-blue-600 px-6 py-4 flex items-center gap-3">
-          <div class="flex gap-2"><div class="w-3 h-3 rounded-full bg-white/40"></div><div class="w-3 h-3 rounded-full bg-white/40"></div><div class="w-3 h-3 rounded-full bg-white/40"></div></div>
-          <span class="text-white text-sm font-medium">NavegaAmazon — Dashboard</span>
-        </div>
-        <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-slate-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-blue-600">8</p><p class="text-xs text-slate-500 mt-1">Viagens Hoje</p></div>
-          <div class="bg-slate-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-emerald-600">342</p><p class="text-xs text-slate-500 mt-1">Passagens (Mês)</p></div>
-          <div class="bg-slate-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-amber-600">87</p><p class="text-xs text-slate-500 mt-1">Fretes (Mês)</p></div>
-          <div class="bg-slate-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-violet-600">R$ 48,2k</p><p class="text-xs text-slate-500 mt-1">Receita Total</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <p class="hero-note">Sem cartão de crédito &bull; 7 dias grátis &bull; Cancele quando quiser</p>
+  </div>
+  <img class="hero-img" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1600&auto=format&fit=crop&q=80" alt="Embarcação fluvial na Amazônia" />
+</section>
 
-  <!-- CONFIANÇA -->
-  <section class="py-10 bg-slate-50 border-y border-slate-100">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <p class="text-sm text-slate-400 mb-6 uppercase tracking-widest font-medium">Utilizado por empresas em toda a Amazônia</p>
-      <div class="flex flex-wrap justify-center gap-8 text-slate-400 text-sm font-medium">
-        <span>⚓ Navegação Tapajós</span><span>⚓ Linhas Fluviais Purus</span><span>⚓ Transportes Rio Negro</span><span>⚓ Amazônia Fluvial</span><span>⚓ Rio Madeira Express</span>
+<!-- FRETES -->
+<section class="section-frete">
+  <div style="max-width:1152px;margin:0 auto">
+    <div class="section-title">
+      <div class="badge badge-amber">Controle de Frete Completo</div>
+      <h2>Encomendas e Cargas com comprovante profissional</h2>
+    </div>
+    <div class="cards-3">
+      <div class="frete-card">
+        <div class="icon-box amber">📦</div>
+        <h3>Encomendas Pessoais</h3>
+        <ul>
+          <li><span class="check">✓</span> Remetente e destinatário</li>
+          <li><span class="check">✓</span> Peso e volumes</li>
+          <li><span class="check">✓</span> Código do frete</li>
+          <li><span class="check">✓</span> Comprovante imprimível</li>
+          <li><span class="check">✓</span> Compartilhar via WhatsApp</li>
+        </ul>
+      </div>
+      <div class="frete-card orange">
+        <div class="icon-box orange">🗃️</div>
+        <h3>Cargas Empresariais</h3>
+        <ul>
+          <li><span class="check">✓</span> CNPJ e nota fiscal</li>
+          <li><span class="check">✓</span> Tipos de carga (alimentos, eletrônicos...)</li>
+          <li><span class="check">✓</span> Cálculo por kg</li>
+          <li><span class="check">✓</span> Vínculo à viagem</li>
+          <li><span class="check">✓</span> Status de entrega</li>
+        </ul>
+      </div>
+      <div class="frete-card rose">
+        <div class="icon-box rose">📋</div>
+        <h3>Status e Rastreio</h3>
+        <ul>
+          <li><span class="check">✓</span> Aguardando embarque</li>
+          <li><span class="check">✓</span> Embarcado</li>
+          <li><span class="check">✓</span> Em trânsito</li>
+          <li><span class="check">✓</span> Entregue</li>
+          <li><span class="check">✓</span> Cancelado</li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FUNCIONALIDADES -->
-  <section id="funcionalidades" class="py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-16">
-        <span class="inline-block mb-4 bg-emerald-100 text-emerald-700 border border-emerald-200 text-sm px-4 py-1 rounded-full font-medium">Funcionalidades</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Tudo que você precisa para operar</h2>
-        <p class="text-lg text-slate-500 max-w-xl mx-auto">Do registro da viagem à emissão do bilhete, passando pelo controle financeiro.</p>
+<!-- FUNCIONALIDADES -->
+<section id="funcionalidades" class="section-func">
+  <div style="max-width:1152px;margin:0 auto">
+    <div class="section-title">
+      <div class="badge badge-emerald">Funcionalidades</div>
+      <h2>Tudo que você precisa para operar</h2>
+      <p style="color:#64748b;margin-top:12px;font-size:17px">Do registro da viagem à entrega da carga: passagens, encomendas, fretes e financeiro — tudo integrado.</p>
+    </div>
+    <div class="func-grid">
+      <div class="func-card">
+        <div class="func-icon" style="background:#3b82f6">👥</div>
+        <h3>Venda de Passagens</h3>
+        <p>Emita bilhetes digitais com QR Code, controle acomodações (rede, poltrona, camarote) e gerencie descontos automaticamente.</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all"><div class="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center mb-4 text-white text-xl">👥</div><h3 class="text-lg font-semibold text-slate-800 mb-2">Venda de Passagens</h3><p class="text-slate-500 text-sm leading-relaxed">Emita bilhetes digitais com QR Code, controle acomodações (rede, poltrona, camarote) e gerencie descontos automaticamente.</p></div>
-        <div class="p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all"><div class="w-12 h-12 rounded-xl bg-amber-500 flex items-center justify-center mb-4 text-white text-xl">📦</div><h3 class="text-lg font-semibold text-slate-800 mb-2">Controle de Fretes</h3><p class="text-slate-500 text-sm leading-relaxed">Registre cargas, calcule valores por kg, acompanhe o status de entrega e emita comprovantes profissionais.</p></div>
-        <div class="p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all"><div class="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center mb-4 text-white text-xl">🚢</div><h3 class="text-lg font-semibold text-slate-800 mb-2">Gestão de Viagens</h3><p class="text-slate-500 text-sm leading-relaxed">Programe viagens, controle capacidade de passageiros e carga, monitore status em tempo real.</p></div>
-        <div class="p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all"><div class="w-12 h-12 rounded-xl bg-violet-500 flex items-center justify-center mb-4 text-white text-xl">📱</div><h3 class="text-lg font-semibold text-slate-800 mb-2">ClicPorto (Online)</h3><p class="text-slate-500 text-sm leading-relaxed">Seus clientes compram passagens diretamente pelo celular, sem precisar ir ao porto. Pagamento via PIX.</p></div>
-        <div class="p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all"><div class="w-12 h-12 rounded-xl bg-rose-500 flex items-center justify-center mb-4 text-white text-xl">💳</div><h3 class="text-lg font-semibold text-slate-800 mb-2">Financeiro Integrado</h3><p class="text-slate-500 text-sm leading-relaxed">Controle contas bancárias, formas de pagamento (dinheiro, PIX, cartão) e visualize receitas por período.</p></div>
-        <div class="p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all"><div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center mb-4 text-white text-xl">📊</div><h3 class="text-lg font-semibold text-slate-800 mb-2">Relatórios Completos</h3><p class="text-slate-500 text-sm leading-relaxed">Dashboards com visão geral da operação, passagens vendidas, receita por rota e performance de vendedores.</p></div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#f59e0b">📦</div>
+        <h3>Encomendas</h3>
+        <p>Registre encomendas pessoais com remetente, destinatário, peso e comprovante imprimível ou via WhatsApp.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#f97316">🗃️</div>
+        <h3>Cargas Empresariais</h3>
+        <p>Gerencie cargas com nota fiscal, CNPJ, tipos (alimentos, eletrônicos, móveis) e controle de status de entrega.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#f43f5e">🚚</div>
+        <h3>Gestão de Fretes</h3>
+        <p>Calcule valores por kg, vincule fretes a viagens, acompanhe status e emita comprovantes profissionais.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#10b981">🚢</div>
+        <h3>Gestão de Viagens</h3>
+        <p>Programe viagens, controle capacidade de passageiros e carga, monitore status em tempo real.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#8b5cf6">📱</div>
+        <h3>ClicPorto (Online)</h3>
+        <p>Seus clientes compram passagens diretamente pelo celular, sem ir ao porto. Pagamento via PIX.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#06b6d4">🔍</div>
+        <h3>Embarque Digital</h3>
+        <p>Leitura de QR Code no embarque, validação de passagens em tempo real e relatório de presença.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#6366f1">💳</div>
+        <h3>Financeiro Integrado</h3>
+        <p>Controle contas bancárias, formas de pagamento (dinheiro, PIX, cartão) e visualize receitas por período.</p>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" style="background:#14b8a6">📊</div>
+        <h3>Relatórios Completos</h3>
+        <p>Dashboards com passagens vendidas, fretes, receita por rota e performance de vendedores.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- DIFERENCIAIS -->
-  <section class="py-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-        <div><div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-4 text-2xl">⚡</div><h3 class="text-xl font-semibold mb-2">Rápido de implementar</h3><p class="text-blue-100 text-sm leading-relaxed">Configure em minutos, sem precisar de técnico. Comece a vender no mesmo dia.</p></div>
-        <div><div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-4 text-2xl">🔒</div><h3 class="text-xl font-semibold mb-2">Seguro e confiável</h3><p class="text-blue-100 text-sm leading-relaxed">Dados protegidos, backups automáticos e acesso controlado por perfil de usuário.</p></div>
-        <div><div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-4 text-2xl">🎧</div><h3 class="text-xl font-semibold mb-2">Suporte humanizado</h3><p class="text-blue-100 text-sm leading-relaxed">Nossa equipe fala a sua língua. Suporte por WhatsApp com atendimento real.</p></div>
+<!-- DIFERENCIAIS -->
+<section class="section-diff">
+  <div class="diff-grid">
+    <div>
+      <div class="diff-icon">⚡</div>
+      <h3>Rápido de implementar</h3>
+      <p>Configure em minutos, sem precisar de técnico. Comece a vender no mesmo dia.</p>
+    </div>
+    <div>
+      <div class="diff-icon">🔒</div>
+      <h3>Seguro e confiável</h3>
+      <p>Dados protegidos, backups automáticos e acesso controlado por perfil de usuário.</p>
+    </div>
+    <div>
+      <div class="diff-icon">🎧</div>
+      <h3>Suporte humanizado</h3>
+      <p>Nossa equipe fala a sua língua. Suporte por WhatsApp com atendimento real.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SEJA VOCÊ TAMBÉM -->
+<section class="section-seja">
+  <div class="seja-inner">
+    <div>
+      <div class="badge badge-sky">Junte-se a nós</div>
+      <h2>Seja você mais uma empresa a modernizar sua operação fluvial</h2>
+      <p>Empresas de transporte fluvial em toda a Amazônia já deixaram o caderno para trás. Com o NavegaAmazon, você vende passagens, controla encomendas e cargas, e gerencia tudo pelo celular — sem complicação.</p>
+      <ul class="seja-list">
+        <li><span class="check" style="font-size:18px">✓</span> Configure em minutos, sem precisar de técnico</li>
+        <li><span class="check" style="font-size:18px">✓</span> Comece a vender passagens no mesmo dia</li>
+        <li><span class="check" style="font-size:18px">✓</span> Seus clientes recebem comprovante na hora</li>
+        <li><span class="check" style="font-size:18px">✓</span> Controle total de fretes, encomendas e cargas</li>
+        <li><span class="check" style="font-size:18px">✓</span> Suporte humano por WhatsApp, em português</li>
+      </ul>
+      <a href="https://app.raysistemas.online/" class="btn btn-primary btn-lg">Quero modernizar minha empresa →</a>
+    </div>
+    <div class="seja-img">
+      <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?w=800&auto=format&fit=crop&q=80" alt="Porto fluvial na Amazônia" />
+    </div>
+  </div>
+</section>
+
+<!-- FAIXA RIO -->
+<div class="river-strip">
+  <img src="https://images.unsplash.com/photo-1586861256632-d5f6e21b2af8?w=1600&auto=format&fit=crop&q=80" alt="Rio Amazonas" />
+</div>
+
+<!-- PLANOS -->
+<section id="planos" class="section-planos">
+  <div style="max-width:1152px;margin:0 auto">
+    <div class="section-title">
+      <div class="badge badge-violet">Planos e Preços</div>
+      <h2>Escolha o plano ideal</h2>
+      <p style="color:#64748b;margin-top:12px;font-size:17px">Comece grátis e evolua conforme sua operação cresce.</p>
+    </div>
+    <div class="planos-grid">
+      <div class="plano-card">
+        <p class="plano-nome">Trial</p>
+        <p class="plano-desc">Para testar sem compromisso</p>
+        <div class="plano-preco"><span>Grátis</span> <small>7 dias</small></div>
+        <ul class="plano-recursos">
+          <li><span class="check">✓</span> Até 10 passagens</li>
+          <li><span class="check">✓</span> 1 embarcação</li>
+          <li><span class="check">✓</span> Fretes inclusos</li>
+          <li><span class="check">✓</span> Suporte por WhatsApp</li>
+        </ul>
+        <a href="https://app.raysistemas.online/" class="btn btn-outline" style="width:100%;justify-content:center">Começar grátis</a>
+      </div>
+      <div class="plano-card">
+        <p class="plano-nome">Básico</p>
+        <p class="plano-desc">Para empresas iniciando no digital</p>
+        <div class="plano-preco"><span>R$ 197</span> <small>/mês</small></div>
+        <ul class="plano-recursos">
+          <li><span class="check">✓</span> Até 200 passagens/mês</li>
+          <li><span class="check">✓</span> 3 embarcações</li>
+          <li><span class="check">✓</span> Rotas ilimitadas</li>
+          <li><span class="check">✓</span> Controle de fretes</li>
+          <li><span class="check">✓</span> Suporte por WhatsApp</li>
+        </ul>
+        <a href="https://app.raysistemas.online/" class="btn btn-outline" style="width:100%;justify-content:center">Assinar agora</a>
+      </div>
+      <div class="plano-card destaque">
+        <div class="plano-badge">Mais popular</div>
+        <p class="plano-nome">Profissional</p>
+        <p class="plano-desc">Para empresas em crescimento</p>
+        <div class="plano-preco"><span>R$ 397</span> <small>/mês</small></div>
+        <ul class="plano-recursos">
+          <li><span class="check">✓</span> Passagens ilimitadas</li>
+          <li><span class="check">✓</span> Embarcações ilimitadas</li>
+          <li><span class="check">✓</span> ClicPorto (vendas online)</li>
+          <li><span class="check">✓</span> Múltiplos vendedores</li>
+          <li><span class="check">✓</span> Relatórios avançados</li>
+          <li><span class="check">✓</span> Suporte prioritário</li>
+        </ul>
+        <a href="https://app.raysistemas.online/" class="btn btn-primary" style="width:100%;justify-content:center">Assinar agora</a>
+      </div>
+      <div class="plano-card">
+        <p class="plano-nome">Premium</p>
+        <p class="plano-desc">Para grandes operações</p>
+        <div class="plano-preco"><span>R$ 697</span> <small>/mês</small></div>
+        <ul class="plano-recursos">
+          <li><span class="check">✓</span> Tudo do Profissional</li>
+          <li><span class="check">✓</span> Múltiplas empresas</li>
+          <li><span class="check">✓</span> API de integração</li>
+          <li><span class="check">✓</span> Relatórios personalizados</li>
+          <li><span class="check">✓</span> Gerente de conta dedicado</li>
+        </ul>
+        <a href="https://app.raysistemas.online/" class="btn btn-outline" style="width:100%;justify-content:center">Assinar agora</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos" class="py-24 bg-slate-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-16">
-        <span class="inline-block mb-4 bg-amber-100 text-amber-700 border border-amber-200 text-sm px-4 py-1 rounded-full font-medium">Depoimentos</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">O que dizem nossos clientes</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-100"><div class="text-amber-400 mb-4">★★★★★</div><p class="text-slate-600 text-sm leading-relaxed mb-6">"Antes eu controlava tudo em caderno. Hoje emito bilhete digital em segundos e meus clientes adoram o QR Code."</p><p class="font-semibold text-slate-800">Capitão Raimundo</p><p class="text-xs text-slate-400">Navegação Tapajós</p></div>
-        <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-100"><div class="text-amber-400 mb-4">★★★★★</div><p class="text-slate-600 text-sm leading-relaxed mb-6">"O ClicPorto foi um divisor de águas. Minhas vendas online aumentaram 40% no primeiro mês."</p><p class="font-semibold text-slate-800">Dona Maria</p><p class="text-xs text-slate-400">Transportes Rio Negro</p></div>
-        <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-100"><div class="text-amber-400 mb-4">★★★★★</div><p class="text-slate-600 text-sm leading-relaxed mb-6">"O controle de frete me economiza horas por semana. Tudo organizado e profissional."</p><p class="font-semibold text-slate-800">Sr. João Batista</p><p class="text-xs text-slate-400">Linhas Fluviais Purus</p></div>
-      </div>
-    </div>
-  </section>
+<!-- CTA FINAL -->
+<section class="section-cta">
+  <div style="max-width:640px;margin:0 auto">
+    <h2>Pronto para modernizar sua operação?</h2>
+    <p>Junte-se a dezenas de empresas fluviais que já digitalizaram seu negócio com o NavegaAmazon.</p>
+    <a href="https://app.raysistemas.online/" class="btn-white">Começar gratuitamente →</a>
+    <small>Sem burocracia. Sem cartão de crédito. 7 dias grátis.</small>
+  </div>
+</section>
 
-  <!-- PLANOS -->
-  <section id="planos" class="py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-16">
-        <span class="inline-block mb-4 bg-blue-100 text-blue-700 border border-blue-200 text-sm px-4 py-1 rounded-full font-medium">Planos</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Escolha o plano ideal</h2>
-        <p class="text-lg text-slate-500">Sem taxas surpresa. Cancele quando quiser.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        <div class="border border-slate-200 rounded-2xl p-7">
-          <span class="inline-block mb-3 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">GRÁTIS</span>
-          <h3 class="text-lg font-bold text-slate-800 mb-2">Trial</h3>
-          <p class="text-slate-500 text-sm mb-5">Teste sem compromisso</p>
-          <div class="mb-5"><span class="text-4xl font-extrabold text-slate-900">R$0</span><span class="text-slate-400"> • 7 dias</span></div>
-          <ul class="space-y-2 text-sm text-slate-600 mb-7">
-            <li>✅ Até 10 passagens</li><li>✅ 1 embarcação</li><li>✅ 1 vendedor</li><li>✅ Fretes inclusos</li><li>✅ Suporte por WhatsApp</li>
-          </ul>
-          <a href="https://app.raysistemas.online" class="block text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition-colors">Começar grátis</a>
-        </div>
-        <div class="border border-slate-200 rounded-2xl p-7">
-          <h3 class="text-lg font-bold text-slate-800 mb-2">Básico</h3>
-          <p class="text-slate-500 text-sm mb-5">Para começar com o essencial</p>
-          <div class="mb-5"><span class="text-4xl font-extrabold text-slate-900">R$89</span><span class="text-slate-400">/mês</span></div>
-          <ul class="space-y-2 text-sm text-slate-600 mb-7">
-            <li>✅ Até 300 passagens/mês</li><li>✅ 2 embarcações</li><li>✅ 3 vendedores</li><li>✅ Fretes ilimitados</li><li>✅ Suporte por WhatsApp</li>
-          </ul>
-          <a href="https://app.raysistemas.online" class="block text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-3 rounded-lg transition-colors">Começar agora</a>
-        </div>
-        <div class="border-2 border-blue-600 rounded-2xl p-7 relative shadow-xl">
-          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full">MAIS POPULAR</span>
-          <h3 class="text-lg font-bold text-slate-800 mb-2">Profissional</h3>
-          <p class="text-slate-500 text-sm mb-5">Para operações em crescimento</p>
-          <div class="mb-5"><span class="text-4xl font-extrabold text-blue-600">R$249</span><span class="text-slate-400">/mês</span></div>
-          <ul class="space-y-2 text-sm text-slate-600 mb-7">
-            <li>✅ Passagens ilimitadas</li><li>✅ Embarcações ilimitadas</li><li>✅ 4 vendedores</li><li>✅ ClicPorto (vendas online)</li><li>✅ Relatórios avançados</li><li>✅ Suporte prioritário</li>
-          </ul>
-          <a href="https://app.raysistemas.online" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors">Começar agora</a>
-        </div>
-        <div class="border border-slate-200 rounded-2xl p-7">
-          <h3 class="text-lg font-bold text-slate-800 mb-2">Premium</h3>
-          <p class="text-slate-500 text-sm mb-5">Para grandes operações</p>
-          <div class="mb-5"><span class="text-4xl font-extrabold text-slate-900">R$350</span><span class="text-slate-400">/mês</span></div>
-          <ul class="space-y-2 text-sm text-slate-600 mb-7">
-            <li>✅ Tudo do Profissional</li><li>✅ Vendedores ilimitados</li><li>✅ Multi-empresas</li><li>✅ API de integração</li><li>✅ Gerente de conta dedicado</li>
-          </ul>
-          <a href="https://app.raysistemas.online" class="block text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-3 rounded-lg transition-colors">Começar agora</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="py-24 bg-gradient-to-br from-sky-600 to-blue-700 text-white text-center">
-    <div class="max-w-3xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-extrabold mb-6">Pronto para modernizar sua operação?</h2>
-      <p class="text-xl text-blue-100 mb-10">Comece grátis por 7 dias. Sem cartão de crédito.</p>
-      <a href="https://app.raysistemas.online" class="inline-flex items-center gap-2 bg-white text-blue-700 font-bold text-lg px-10 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg">Começar gratuitamente →</a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-400 py-12">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-2">
-          <span class="text-blue-400 text-xl">⚓</span>
-          <span class="text-white font-bold">NavegaAmazon</span>
-        </div>
-        <div class="flex flex-wrap justify-center gap-6 text-sm">
-          <a href="#funcionalidades" class="hover:text-white transition-colors">Funcionalidades</a>
-          <a href="#planos" class="hover:text-white transition-colors">Planos</a>
-          <a href="#depoimentos" class="hover:text-white transition-colors">Depoimentos</a>
-          <a href="https://app.raysistemas.online" class="hover:text-white transition-colors">Entrar</a>
-        </div>
-        <p class="text-xs">© 2025 NavegaAmazon. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
-  </script>
+<!-- FOOTER -->
+<footer>
+  <div class="logo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg>
+    NavegaAmazon
+  </div>
+  <p>Sistema de Gestão Fluvial — Passagens, Encomendas, Cargas e Fretes</p>
+  <p style="margin-top:8px;color:#374151">© 2026 NavegaAmazon. Todos os direitos reservados.</p>
+</footer>
 
 </body>
 </html>
